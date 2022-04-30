@@ -1,0 +1,116 @@
+﻿@model IEnumerable<caso>
+
+@{
+    IEnumerable<string> departamentos = new List<string> { "Santa Ana", "Ahuachapan", "Sonsonate", "Chalatenango", "La libertad",
+                                                           "San salvador", "Usulutan", "San miguel","Cabañas", "Morazán", "La unión",
+                                                           "La paz", "Cuscatlán", "San vicente" };
+
+    IEnumerable<string> generos = new List<string> { "Masculino", "Femenino" };
+
+
+}
+
+<div class="container-fluid bg-secondary">
+
+
+    <div class="container mb-5">
+        <h2>Registros de covid</h2>
+        <p class="text-center">
+            El siguiente formulario es para llevar el registro de casos reportados de
+            covid por departamento y genero
+        </p>
+    </div>
+
+    <div class="container-fluid">
+        <h4>Reportar caso</h4>
+        @using (Html.BeginForm("NewPost", "Covid", FormMethod.Post))
+        {
+
+
+            <div class="row">
+                <div class="mb-3 col-md-5">
+                    <label for="departamentos" class="form-label">Departamentos</label>
+
+                    <select class="form-select w-100" name="departamento" required>
+                        <option selected disabled>Selecciona un departamento</option>
+
+                        @foreach (var item in (departamentos))
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </select>
+
+                </div>
+
+                <div class="mb-3 col-md-5">
+                    <label for="generos" class="form-label">Genero</label>
+
+                    <select class="form-select w-100" name="genero" required>
+                        <option selected disabled>Selecciona un género</option>
+
+                        @foreach (var item in (generos))
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label for="confirmados" class="form-label">Casos confirmados</label>
+                    @Html.TextBox("confirmados", "", new { @class = "form-control" })
+                </div>
+                <div class="mb-3 col-md-4">
+                    <label for="recuperados" class="form-label">Casos recuperados</label>
+                    @Html.TextBox("recuperados", "", new { @class = "form-control" })
+                </div>
+                <div class="mb-3 col-md-4">
+                    <label for="fallecidos" class="form-label">Casos fallecidos</label>
+                    @Html.TextBox("fallecidos", "", new { @class = "form-control" })
+                </div>
+            </div>
+
+
+            <button type="submit" class="btn btn-success btn-block">Submit</button>
+
+        }
+    </div>
+
+
+
+    <div class="container-fluid mt-5">
+        <h4 class="mb-3">Casos Reportados</h4>
+
+
+        <table class="table mr-3 ml-3">
+            <thead>
+                <tr>
+                    <th scope="col">Departamento</th>
+                    <th scope="col">Genero</th>
+                    <th scope="col">Confirmados</th>
+                    <th scope="col">Recuperados</th>
+                    <th scope="col">Fallecidos</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var c in Model)
+                {
+
+                    <tr>
+                        <td>@Html.DisplayFor(item => c.departamento)</td>
+                        <td>@Html.DisplayFor(item => c.genero)</td>
+                        <td>@Html.DisplayFor(item => c.confirmados)</td>
+                        <td>@Html.DisplayFor(item => c.recuperados)</td>
+                        <td>@Html.DisplayFor(item => c.fallecidos)</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
